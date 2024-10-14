@@ -12,6 +12,9 @@ date = st.text_input("Enter Date:")
 vehicle_number = st.text_input("Enter Vehicle Number:")
 party_name = st.text_input("Enter Party Name:")
 
+# Radio button for Gaadi Type
+gaadi_type = st.radio("Select Gaadi Type:", options=["Khadi", "Poori"])
+
 # Inputs for weights
 a = st.number_input("Enter Daal:", min_value=0.0, step=0.1)
 b = st.number_input("Enter Tukdi:", min_value=0.0, step=0.1)
@@ -77,6 +80,7 @@ def generate_pdf():
     pdf.cell(200, 10, txt=f"Date: {date}", ln=True)
     pdf.cell(200, 10, txt=f"Vehicle Number: {vehicle_number}", ln=True)
     pdf.cell(200, 10, txt=f"Party Name: {party_name}", ln=True)
+    pdf.cell(200, 10, txt=f"Gaadi Type: {gaadi_type}", ln=True)
     pdf.ln(10)  # Add a line space
 
     pdf.cell(200, 10, txt="Details (in grams):", ln=True)
