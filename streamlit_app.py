@@ -69,17 +69,17 @@ def generate_pdf():
     pdf.cell(200, 10, txt="Dal Split Report", ln=True, align='C')
     pdf.ln(10)  # Add a line space
 
-    pdf.cell(200, 10, txt="Details for Sheet:", ln=True)
-    pdf.cell(200, 10, txt=f"Daal: {h}", ln=True)
-    pdf.cell(200, 10, txt=f"Tukdi: {i}", ln=True)
-    pdf.cell(200, 10, txt=f"Red/Black: {j}", ln=True)
-    pdf.cell(200, 10, txt=f"Chhala: {k}", ln=True)
-    pdf.cell(200, 10, txt=f"Dankhal: {l}", ln=True)
-    pdf.cell(200, 10, txt=f"14 Mesh: {m}", ln=True)
-    pdf.cell(200, 10, txt=f"Grand Total for Sheet: {grand_total}", ln=True)
+    pdf.cell(200, 10, txt="Details (in grams):", ln=True)
+    pdf.cell(200, 10, txt=f"Daal: {h}gm", ln=True)
+    pdf.cell(200, 10, txt=f"Tukdi: {i}gm", ln=True)
+    pdf.cell(200, 10, txt=f"Red/Black: {j}gm", ln=True)
+    pdf.cell(200, 10, txt=f"Chhala: {k}gm", ln=True)
+    pdf.cell(200, 10, txt=f"Dankhal: {l}gm", ln=True)
+    pdf.cell(200, 10, txt=f"14 Mesh: {m}gm", ln=True)
+    pdf.cell(200, 10, txt=f"Grand Total for Sheet: {grand_total}gm", ln=True)
     pdf.ln(10)
 
-    pdf.cell(200, 10, txt="Details in Percentage:", ln=True)
+    pdf.cell(200, 10, txt="Details (in percentage):", ln=True)
     pdf.cell(200, 10, txt=f"Daal: {h_percent}%", ln=True)
     pdf.cell(200, 10, txt=f"Tukdi: {i_percent}%", ln=True)
     pdf.cell(200, 10, txt=f"Total (Dal + Tukdi): {total_dal_tukdi_percent}%", ln=True)
@@ -91,7 +91,7 @@ def generate_pdf():
     pdf.cell(200, 10, txt=f"Total (6): {total_6_percent}%", ln=True)
 
     # Save the PDF to a temporary file
-    pdf_file = "details_report.pdf"
+    pdf_file = "dal_split_report.pdf"
     pdf.output(pdf_file)
     return pdf_file
 
@@ -100,10 +100,10 @@ def pdf_download_link(pdf_file):
     with open(pdf_file, "rb") as f:
         pdf_data = f.read()
     b64 = base64.b64encode(pdf_data).decode()
-    href = f'<a href="data:application/octet-stream;base64,{b64}" download="details_report.pdf">📥 Download PDF</a>'
+    href = f'<a href="data:application/octet-stream;base64,{b64}" download="dal_split_report.pdf">📥 Download PDF</a>'
     return href
 
 # Display the PDF download button
-if st.button("Generate and Download PDF"):
+if st.button("Generate PDF"):
     pdf_file = generate_pdf()
     st.markdown(pdf_download_link(pdf_file), unsafe_allow_html=True)
