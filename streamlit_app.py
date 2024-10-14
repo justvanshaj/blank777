@@ -7,7 +7,12 @@ st.set_page_config(page_title="Details Calculation", page_icon="📄")
 
 st.header("Details Calculation in terms of 5gm")
 
-# Inputs
+# Collecting additional details
+date = st.text_input("Enter Date:")
+vehicle_number = st.text_input("Enter Vehicle Number:")
+party_name = st.text_input("Enter Party Name:")
+
+# Inputs for weights
 a = st.number_input("Enter Daal:", min_value=0.0, step=0.1)
 b = st.number_input("Enter Tukdi:", min_value=0.0, step=0.1)
 c = st.number_input("Enter Red/Black:", min_value=0.0, step=0.1)
@@ -64,9 +69,14 @@ st.write(f"Total (6): {total_6_percent}%")
 def generate_pdf():
     pdf = FPDF()
     pdf.add_page()
-    
+
     pdf.set_font("Arial", size=12)
     pdf.cell(200, 10, txt="Dal Split Report", ln=True, align='C')
+    pdf.ln(10)  # Add a line space
+
+    pdf.cell(200, 10, txt=f"Date: {date}", ln=True)
+    pdf.cell(200, 10, txt=f"Vehicle Number: {vehicle_number}", ln=True)
+    pdf.cell(200, 10, txt=f"Party Name: {party_name}", ln=True)
     pdf.ln(10)  # Add a line space
 
     pdf.cell(200, 10, txt="Details (in grams):", ln=True)
