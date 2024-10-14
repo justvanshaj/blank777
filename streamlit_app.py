@@ -66,11 +66,8 @@ def generate_pdf():
     pdf.add_page()
     
     pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Details Calculation Report", ln=True, align='C')
+    pdf.cell(200, 10, txt="Dal Split Report", ln=True, align='C')
     pdf.ln(10)  # Add a line space
-
-    pdf.cell(200, 10, txt=f"Grand Total: {g}", ln=True)
-    pdf.ln(5)
 
     pdf.cell(200, 10, txt="Details for Sheet:", ln=True)
     pdf.cell(200, 10, txt=f"Daal: {h}", ln=True)
