@@ -1,54 +1,112 @@
 import streamlit as st
-from PIL import Image
+from fpdf import FPDF
+import base64
 
-st.header("Aravally Sieve Shaker Calculator")
-hide_st_style="""
-<style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
-</style>
-"""
-st.markdown(hide_st_style, unsafe_allow_html=True)
+# Set the page configuration
+st.set_page_config(page_title="Details Calculation", page_icon="📄")
 
-# Load the image (replace 'image.jpg' with your file path)
-img = Image.open('Banner.jpg')
+st.header("Details Calculation in terms of 5gm")
 
-# Display the image
-st.image(img, caption='', use_column_width=True)
+# Inputs
+a = st.number_input("Enter Daal:", min_value=0.0, step=0.1)
+b = st.number_input("Enter Tukdi:", min_value=0.0, step=0.1)
+c = st.number_input("Enter Red/Black:", min_value=0.0, step=0.1)
+d = st.number_input("Enter Chhala:", min_value=0.0, step=0.1)
+e = st.number_input("Enter Dankhal:", min_value=0.0, step=0.1)
+f = st.number_input("Enter 14 Mesh:", min_value=0.0, step=0.1)
 
-# Input for sample
-x = st.number_input("Enter Sample:", min_value=1, step=1)
+# Calculations
+g = a + b + c + d + e + f
+h = a * 2
+i = b * 2
+j = c * 2
+k = d * 2
+l = e * 2
+m = f * 2
+grand_total = h + i + j + k + l + m
 
-# Inputs for each weight
-y1 = st.number_input("Enter 60#:", min_value=0.000, step=0.001,format="%.3f")
-y2 = st.number_input("Enter 100#:", min_value=0.000, step=0.001,format="%.3f")
-y3 = st.number_input("Enter 150#:", min_value=0.000, step=0.001,format="%.3f")
-y4 = st.number_input("Enter 200#:", min_value=0.000, step=0.001,format="%.3f")
-y5 = st.number_input("Enter 240#:", min_value=0.000, step=0.001,format="%.3f")
-y6 = st.number_input("Enter 300#:", min_value=0.000, step=0.001,format="%.3f")
-y7 = st.number_input("Enter 350#:", min_value=0.000, step=0.001,format="%.3f")
-y8 = st.number_input("Enter Base:", min_value=0.000, step=0.001,format="%.3f")
+# Percentage calculations
+h_percent = h * 10
+i_percent = i * 10
+total_dal_tukdi_percent = h_percent + i_percent
+j_percent = j * 10
+k_percent = k * 10
+l_percent = l * 10
+m_percent = m * 10
+total_4_percent = j_percent + k_percent + l_percent + m_percent
+total_6_percent = total_dal_tukdi_percent + total_4_percent
 
-# Perform the calculations
-if x > 0:
-    z1 = (y1 * 100) / x
-    z2 = (y2 * 100) / x + z1
-    z3 = (y3 * 100) / x + z2
-    z4 = (y4 * 100) / x + z3
-    z5 = (y5 * 100) / x + z4
-    z6 = (y6 * 100) / x + z5
-    z7 = (y7 * 100) / x + z6
-    z8 = (y8 * 100) / x + z7
+# Display results
+st.subheader("Grand Total")
+st.write(f"Grand Total: {g}")
 
-    # Display the results
-    st.write(f"60#  : {z1:.4f}%")
-    st.write(f"100# : {z2:.4f}%")
-    st.write(f"150# : {z3:.4f}%")
-    st.write(f"200# : {z4:.4f}%")
-    st.write(f"240# : {z5:.4f}%")
-    st.write(f"300# : {z6:.4f}%")
-    st.write(f"350# : {z7:.4f}%")
-    st.write(f"Base : {z8:.4f}%")
-else:
-    st.write("Please enter a sample greater than 0.")
+st.subheader("Details for Sheet")
+st.write(f"Daal: {h}")
+st.write(f"Tukdi: {i}")
+st.write(f"Red/Black: {j}")
+st.write(f"Chhala: {k}")
+st.write(f"Dankhal: {l}")
+st.write(f"14 Mesh: {m}")
+st.write(f"Grand Total for Sheet: {grand_total}")
+
+st.subheader("Details in Percentage")
+st.write(f"Daal: {h_percent}%")
+st.write(f"Tukdi: {i_percent}%")
+st.write(f"Total (Dal + Tukdi): {total_dal_tukdi_percent}%")
+st.write(f"Red/Black: {j_percent}%")
+st.write(f"Chhala: {k_percent}%")
+st.write(f"Dankhal: {l_percent}%")
+st.write(f"14 Mesh: {m_percent}%")
+st.write(f"Total (4): {total_4_percent}%")
+st.write(f"Total (6): {total_6_percent}%")
+
+# Generate PDF content
+def generate_pdf():
+    pdf = FPDF()
+    pdf.add_page()
+    
+    pdf.set_font("Arial", size=12)
+    pdf.cell(200, 10, txt="Details Calculation Report", ln=True, align='C')
+    pdf.ln(10)  # Add a line space
+
+    pdf.cell(200, 10, txt=f"Grand Total: {g}", ln=True)
+    pdf.ln(5)
+
+    pdf.cell(200, 10, txt="Details for Sheet:", ln=True)
+    pdf.cell(200, 10, txt=f"Daal: {h}", ln=True)
+    pdf.cell(200, 10, txt=f"Tukdi: {i}", ln=True)
+    pdf.cell(200, 10, txt=f"Red/Black: {j}", ln=True)
+    pdf.cell(200, 10, txt=f"Chhala: {k}", ln=True)
+    pdf.cell(200, 10, txt=f"Dankhal: {l}", ln=True)
+    pdf.cell(200, 10, txt=f"14 Mesh: {m}", ln=True)
+    pdf.cell(200, 10, txt=f"Grand Total for Sheet: {grand_total}", ln=True)
+    pdf.ln(10)
+
+    pdf.cell(200, 10, txt="Details in Percentage:", ln=True)
+    pdf.cell(200, 10, txt=f"Daal: {h_percent}%", ln=True)
+    pdf.cell(200, 10, txt=f"Tukdi: {i_percent}%", ln=True)
+    pdf.cell(200, 10, txt=f"Total (Dal + Tukdi): {total_dal_tukdi_percent}%", ln=True)
+    pdf.cell(200, 10, txt=f"Red/Black: {j_percent}%", ln=True)
+    pdf.cell(200, 10, txt=f"Chhala: {k_percent}%", ln=True)
+    pdf.cell(200, 10, txt=f"Dankhal: {l_percent}%", ln=True)
+    pdf.cell(200, 10, txt=f"14 Mesh: {m_percent}%", ln=True)
+    pdf.cell(200, 10, txt=f"Total (4): {total_4_percent}%", ln=True)
+    pdf.cell(200, 10, txt=f"Total (6): {total_6_percent}%", ln=True)
+
+    # Save the PDF to a temporary file
+    pdf_file = "details_report.pdf"
+    pdf.output(pdf_file)
+    return pdf_file
+
+# Function to create a download link
+def pdf_download_link(pdf_file):
+    with open(pdf_file, "rb") as f:
+        pdf_data = f.read()
+    b64 = base64.b64encode(pdf_data).decode()
+    href = f'<a href="data:application/octet-stream;base64,{b64}" download="details_report.pdf">📥 Download PDF</a>'
+    return href
+
+# Display the PDF download button
+if st.button("Generate and Download PDF"):
+    pdf_file = generate_pdf()
+    st.markdown(pdf_download_link(pdf_file), unsafe_allow_html=True)
